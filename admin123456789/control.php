@@ -32,7 +32,7 @@ include("../function/admin_function.php");
         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
         <span class="hello"><? echo "您好".$_SESSION["loginMember"]; ?></span>
         &nbsp;&nbsp;
-        <a class="toolbox" href="#" data-toggle="popover" data-placement="bottom"> <!-- data-trigger="focus"-->
+        <a class="toolbox" href="#" data-toggle="popover" data-placement="bottom">
           <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
         </a>
         <a href="?logout=true">
