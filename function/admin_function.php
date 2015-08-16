@@ -200,7 +200,22 @@ if(isset($_FILES['files'])){
     $file_type=$_FILES['files']['type'][$key];
     $file_format = strrchr($file_name,"."); //取得副檔名
     $code_file_name = "AT".gmdate("YmdHis",time()+28800).rand(11,999); //產生亂數檔名
-    $src = imagecreatefromjpeg($_FILES['files']['tmp_name'][$key]);
+//    $headers = get_headers($file_tmp, 1);
+    switch ($file_type)
+    {
+        case 'image/jpeg':
+             $src = imagecreatefromjpeg($file_tmp);
+        break;
+        case 'image/gif':
+             $src = imagecreatefromgif($file_tmp);
+        break;
+        case 'image/png':
+             $src = imagecreatefrompng($file_tmp);
+        break;
+        default:
+            die('不支援這種檔案類型');
+    }
+//    $src = imagecreatefromjpeg($_FILES['files']['tmp_name'][$key]);
     // get the source image's widht and hight
     $x = imagesx($src);
     $y = imagesy($src);
@@ -230,7 +245,7 @@ if(isset($_FILES['files'])){
       //LOCAL//move_uploaded_file($file_tmp,"$file_path/".$code_file_name.$file_format); //以電腦亂數檔名上傳
       if (ftp_put($conn, "$file_path/".$code_file_name.$file_format , $file_tmp , FTP_ASCII) and ftp_put($conn, "$file_path/"."thumb/".$code_file_name.$file_format , "/tmp/".$thumb_file_name.'.jpg' , FTP_ASCII)) {
         $imgurl= "../image/".$row_result_func1['ct_code']."/".$row_result_func1['c_number']."/".$album_number."/".$code_file_name.$file_format;
-				$admin_status .= "<div class='grid'><img src='$imgurl' style='width: 100%; height: 150px; padding: 10px; object-fit: contain;'/>";
+				$admin_status .= "<div class='grid'><img src='$imgurl' style='max-width: 100%; max-height: 160px; padding: 10px; /*object-fit: contain;*/'/>";
 				$admin_status .= "檔案". $file_number ."成功上傳</div>";
 				$file_number++;
       } else {

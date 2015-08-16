@@ -34,7 +34,19 @@ function activect($i) {
 
 // function 1 loadimage
   function loadimage($start, $count){
-    $sql_func1 = "SELECT * FROM ( SELECT * FROM `photo` ORDER BY `time` DESC LIMIT $start, $count ) AS T2 ORDER BY RAND() LIMIT $start, $count";
+    $sql = "SELECT `c_number` FROM `club` WHERE `c_show` = 1";
+    $result_sql = mysql_query($sql);
+    $c_number = '';
+    $i = 1;
+    while($row_result = mysql_fetch_assoc($result_sql)){
+      if ($i == 1){
+        $i++;
+      }else{
+        $c_number .= ", ";
+      }
+      $c_number .= $row_result['c_number'];
+    }
+    $sql_func1 = "SELECT * FROM ( SELECT * FROM `photo` WHERE `club_number` in ($c_number) ORDER BY `time` DESC LIMIT $start, $count ) AS T2 ORDER BY RAND()";
     $result_func1 = mysql_query($sql_func1);
     return $result_func1;
   }
