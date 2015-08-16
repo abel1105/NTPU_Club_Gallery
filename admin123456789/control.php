@@ -21,7 +21,7 @@ include("../function/admin_function.php");
     <script src="../lib/jquery_cookie/jquery.cookie.js"></script>
     <? include_once('../function/amchart/amchart.php') ?> 
   </head>
-  <body class="color">
+  <body class="color" style="display:none;">
     <div id="topNav">
       <div class="logo">
         <a data-pjax href="control.php?status=control">
@@ -164,16 +164,21 @@ include("../function/admin_function.php");
               <div id="bouncechart"></div>
             </div>
           </div>
+          <div class="col-md-4">
+            <div class="widget tac">
+              <b class="title">一個月瀏覽裝置比率</b>
+              <div id="devicechart"></div>
+            </div>
+          </div>
+          </div>
         </div>
       </div>
       <? include_once('../function/amchart/bounce.php') ?>
       <? include_once('../function/amchart/top.php') ?>
       <? include_once('../function/amchart/return&new.php') ?>
       <? include_once('../function/amchart/visit.php') ?>
+      <? include_once('../function/amchart/device.php') ?>
       <script>
-      $(function(){
-
-      });
       $(".confirm").confirm({
         text: "您確定要刪除該社團? 該社團底下的照片跟資料庫都會一併消失，不可復原。",
         confirm: function() {
@@ -187,7 +192,6 @@ include("../function/admin_function.php");
         confirmButtonClass: "btn-danger",
         cancelButtonClass: "btn-default",
       });
-      
       </script>
     </div>
     <div id="footer">

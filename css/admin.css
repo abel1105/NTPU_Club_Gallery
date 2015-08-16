@@ -1,3 +1,6 @@
+*{
+ font-family: 'Noto Sans CJK TC', Helvetica, Microsoft JhengHei; 
+}
 /*  all  */
 body.color {
   background-color: rgb(51,51,51);
@@ -44,10 +47,11 @@ body.daynight {
   font-weight: 300;
 }
 span.spot {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   display: inline-block;
+  border: solid 1.5px #fff;
 }
 span.spot.active {
   background-color: #26A69A; 
@@ -242,14 +246,21 @@ height		: 300px;
 font-size	: 11px;
 }
 #return_newchart {
-width		: 100%;
-height		: 180px;
-font-size	: 11px;
+width		: 70%;
+height		: 300px;
+font-size	: 15px;
+margin: 0 auto;
 }
 #topchart {
   width: 100%;
   height: 300px;
   font-size: 11px;
+}
+#devicechart {
+  width: 70%;
+  height: 300px;
+  font-size: 15px;
+  margin: 0 auto;
 }
 .amcharts-pie-slice {
   transform: scale(1);
