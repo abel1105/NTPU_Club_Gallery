@@ -1,11 +1,11 @@
 function selectcolor(e){
-  if (e % 7 == 0) {  return "#E86178"; }
-  else if (e % 7 == 1) { return "#E45260"; }
-  else if (e % 7 == 2) { return "#EC6338"; }
-  else if (e % 7 == 3) { return "#D63751"; }
+  if (e % 7 == 0) {  return "#E6546A"; }
+  else if (e % 7 == 1) { return "#DF3854"; }
+  else if (e % 7 == 2) { return "#F26D47"; }
+  else if (e % 7 == 3) { return "#E85C5D"; }
   else if (e % 7 == 4) { return "#D22F15"; }
-  else if (e % 7 == 5) { return "#B34173"; }
-  else if (e % 7 == 6) { return "#EB583C"; }
+  else if (e % 7 == 5) { return "#ED657B"; }
+  else if (e % 7 == 6) { return "#ED9BAB"; }
 }
 function changephoto(){
   $('i.fa.fa-chevron-left').click(function(){
