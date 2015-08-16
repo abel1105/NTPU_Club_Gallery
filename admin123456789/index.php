@@ -8,14 +8,18 @@ if (!isset($_SESSION["loginMember"]) || ($_SESSION["loginMember"]==""))
 	if(isset($_POST["username"]) && isset($_POST["passwd"])){
 		$sql_query = "SELECT * FROM `admin`";
 		$result = mysql_query($sql_query);
-		$row_result = mysql_fetch_assoc($result);
-		$username = $row_result["username"];
-		$passwd = $row_result["passwd"];
-		if(($_POST["username"]==$username) && (md5($_POST["passwd"]) == $passwd)) {
-			$_SESSION["loginMember"]=$username;
-			header("Location: control.php?status=control");
-		}else{
-      header("Location: index.php");
+		while($row_result = mysql_fetch_assoc($result)){
+      $username = $row_result["username"];
+      $passwd = $row_result["passwd"];
+      if(($_POST["username"]==$username) && (md5($_POST["passwd"]) == $passwd)) {
+        $_SESSION["loginMember"]=$username;
+        header("Location: control.php?status=control");
+        break;
+      }else{
+  //      header("Location: index.php");
+        echo "<script type='text/javascript'>alert('錯誤帳號或密碼');</script>";
+        break;
+      }
     }
 	}
 }else{
