@@ -6,6 +6,7 @@ require_once("function/front_function.php");
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!DOCTYPE html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
+    <title>臺北大學社團活動相簿</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -242,7 +243,17 @@ require_once("function/front_function.php");
                 "autostartAtImage": $('a.active-photo').index()+1,
                 canClose: true,
                 height: $(window).height(),
-                slideshowInterval: '3s'
+                slideshowInterval: '3s',
+                thumbnailsFullScreen: false,
+                tooltipToggleThumbnails: '顯示/隱藏縮圖',
+                tooltipZoom: '放大',
+                tooltipSlideshow: '幻燈片',
+                tooltipRandom: '隨機',
+                tooltipClose: '關閉',
+                tooltipFullScreen: '全螢幕',
+                closeGallery: function() {
+                  $('body').css('overflow', 'auto');
+                }
               })
             ).then(function(){
               
@@ -255,7 +266,7 @@ require_once("function/front_function.php");
               $('.fa.change-mode.jgallery-btn.jgallery-btn-small.fa-expand').addClass('hidden-xs');
               $('.fa.fa-th.full-screen.jgallery-btn.jgallery-btn-small').addClass('hidden-xs');
               
-            
+              $('body').css('overflow', 'hidden');
             });
           } );
             
