@@ -10,13 +10,13 @@ $result1 = mysql_query($sql_query1);
 $result3 = mysql_query($sql_query1);
 //color function
 function selectcolor($e){
-  if ($e % 7 == 0) {  echo "#E86178"; }
-  elseif ($e % 7 == 1) { echo "#E45260"; }
-  elseif ($e % 7 == 2) { echo "#EC6338"; }
-  elseif ($e % 7 == 3) { echo "#D63751"; }
+  if ($e % 7 == 0) {  echo "#E6546A"; }
+  elseif ($e % 7 == 1) { echo "#DF3854"; }
+  elseif ($e % 7 == 2) { echo "#F26D47"; }
+  elseif ($e % 7 == 3) { echo "#E85C5D"; }
   elseif ($e % 7 == 4) { echo "#D22F15"; }
-  elseif ($e % 7 == 5) { echo "#B34173"; }
-  elseif ($e % 7 == 6) { echo "#EB583C"; }
+  elseif ($e % 7 == 5) { echo "#ED657B"; }
+  elseif ($e % 7 == 6) { echo "#ED9BAB"; }
 }
 // 判斷社團類別下的社團有沒有show
 function showct($i) {

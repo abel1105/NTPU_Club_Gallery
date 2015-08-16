@@ -8,6 +8,8 @@ include("../function/admin_function.php");
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>社團相簿管理系統</title>
     <link href="../lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../lib/nprogress/nprogress.css" rel="stylesheet">
@@ -16,8 +18,9 @@ include("../function/admin_function.php");
     <script src="../lib/nprogress/nprogress.js"></script>
     <script src="../lib/jquery.confirm/jquery.confirm.min.js"></script>
     <script src="../js/check_form_function.js"></script>
+    <? include_once('../function/amchart/amchart.php') ?> 
   </head>
-  <body>
+  <body class="color">
     <div id="topNav">
       <div class="logo">
         <a data-pjax href="control.php?status=control">
@@ -28,6 +31,9 @@ include("../function/admin_function.php");
         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
         <span class="hello"><? echo "您好".$_SESSION["loginMember"]; ?></span>
         &nbsp;&nbsp;
+        <a class="toolbox" href="#" data-toggle="popover" data-placement="bottom">
+          <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+        </a>
         <a href="?logout=true">
           <button class="m_button">登出系統</button>
         </a>
@@ -47,6 +53,7 @@ include("../function/admin_function.php");
         <div class="club_type">
           <div class="club_type_title">
             <span class="club_type_span"><? echo $row_result1["ct_name"]; ?></span>
+            <span id="spot_ct_<? echo $row_result1['ct_number']?>" class="spot <? if($row_result1["ct_show"]==0){echo noactive;}else{echo active;}?>"  onclick="pushSpotStatus('<? echo $row_result1['ct_number']?>','',this.id)"></span>
           </div>
           <ul class="club" style="display: none;">
             <?
@@ -55,6 +62,7 @@ include("../function/admin_function.php");
             while($row_result2 = mysql_fetch_assoc($result2)){ ?>
             <li class="club_<? echo $row_result2["c_number"]; ?>">
               <a data-pjax href="album_type.php?club_number=<? echo $row_result2["c_number"]; ?>"><? echo $row_result2["c_name"]; ?></a>
+              <span id="spot_c_<? echo $row_result2['c_number']?>" class="spot <? if($row_result2["c_show"]==0){echo noactive; }else{echo active;}?>" onclick="pushSpotStatus('', '<? echo $row_result2['c_number']?>',this.id)"></span> 
             </li>
             <? } ?>
           </ul>
