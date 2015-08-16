@@ -58,18 +58,32 @@ function saveStatus(key, value){
 }
 function addcolor(e){
   $('body').removeClass().addClass(e);
-  Cookies.set('color', e, { expires: 30 });
+  saveStatus('color', e);
+  $('.toolbox').on('inserted.bs.popover', function () {
+    $('select#changeColor option[value="'+e+'"]').prop('selected', true);
+  })
 };
-function toggleMenu() {
-  $('#sideNav').toggle();
-  if($('#sideNav').is(":hidden")){
-    $('#wrap').css('margin-left', 20);
-    saveStatus('togglemenu', 'hide');
-  }else{
+if(localStorage.getItem('status') != undefined){
+  var getStatus = localStorage.getItem('status');
+  addcolor(JSON.parse(getStatus).color);
+  toggleMenu(JSON.parse(getStatus).togglemenu);
+  $('body').show();
+}
+function toggleMenu(e) {
+  function show(){
+    $('#sideNav').show();
     $('#wrap').css('margin-left', 235);
     saveStatus('togglemenu', 'show');
   }
-
+  function hide(){
+    $('#sideNav').hide();
+    $('#wrap').css('margin-left', 20);
+    saveStatus('togglemenu', 'hide');
+  }
+  if( e == 'hide'){ hide();}
+  else if(e == 'show'){ show(); }
+  else if(!$('#sideNav').is(":hidden")){ hide(); }
+  else{ show();}
 };
 function createPie(dataElement, pieElement) {
   var listData = [];
@@ -120,13 +134,13 @@ function pushSpotStatus(ct_number,c_number,id){
     jQuery('#'+id).removeClass('noactive').addClass('active');
   }
   }
-
-jQuery(document).ready(function($) {
-  // initial pjax
+// initial pjax
   $(document).pjax('a[data-pjax]', '#wrap', {fragment:'#wrap', timeout:5000});
   //progress bar
   $(document).on('pjax:start', function() { NProgress.start(); });
   $(document).on('pjax:end',   function() { NProgress.done();  });
+jQuery(document).ready(function($) {
+  
   // click club_type and toggle club
   $('div.club_type_title').click(function() {
     $(this).parent().children('ul').toggle();
@@ -152,10 +166,7 @@ jQuery(document).ready(function($) {
     $('span.control').closest('.club_type').addClass('active');
   })
   // initial toobox
-//  if( Cookies.get('color') != undefined){
-//    addcolor(Cookies.get('color'));
-//  }
-  $('.toolbox').popover({ html : true, content: '背景</br><select onchange="addcolor(value)"><option value="color">正常</option><option value="blue">藍色</option><option value="grey">灰色</option><option value="green">綠色</option><option value="daynight">黑藍</option></select></br>功能表</br><button class="blueBtn" onclick="toggleMenu()">toggle</button>'});
+  $('.toolbox').popover({ html : true, content: '<div style="text-align: center;"> 背景</br><select id= "changeColor" onchange="addcolor(value)"><option value="color">正常</option><option value="blue">藍色</option><option value="grey">灰色</option><option value="green">綠色</option><option value="daynight">黑藍</option></select></br>功能表</br><button class="blueBtn" onclick="toggleMenu()">toggle</button></div>'});
 
   // add bootstrap icon in club_type
   $('.club_type:eq(0) div.club_type_title').prepend("<span class='glyphicon glyphicon-cog' aria-hidden='true'></span>")
