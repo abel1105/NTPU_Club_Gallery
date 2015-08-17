@@ -170,7 +170,6 @@ include("../function/admin_function.php");
               <div id="devicechart"></div>
             </div>
           </div>
-          </div>
         </div>
       </div>
       <? include_once('../function/amchart/bounce.php') ?>
