@@ -24,7 +24,7 @@ include("../function/admin_function.php");
     <div id="topNav">
       <div class="logo">
         <a data-pjax href="control.php?status=control">
-          <img src="../image/back logo.png">
+          <img src="../image/back_logo.png">
         </a>
       </div>
       <div class="loginbar">

@@ -25,7 +25,7 @@ include("../function/admin_function.php");
     <div id="topNav">
       <div class="logo">
         <a data-pjax href="control.php?status=control">
-          <img src="../image/back logo.png">
+          <img src="../image/back_logo.png">
         </a>
       </div>
       <div class="loginbar">
@@ -84,12 +84,12 @@ include("../function/admin_function.php");
                   <? echo "新增社團失敗"; ?>
                 </div>
               <? } elseif($_GET['admin'] == '2') { ?>
-                <div class="widget" style="background-color: rgba(244,67,54,0.5);">
-                  <? echo "刪除社團失敗"; ?>
+                <div class="widget" style="background-color: rgba(38,166,154,0.5);">
+                  <? echo "刪除社團成功"; ?>
                 </div>
               <? } elseif($_GET['admin'] == '3') { ?>
                 <div class="widget" style="background-color: rgba(244,67,54,0.5);">
-                  <? echo "刪除社團成功"; ?>
+                  <? echo "刪除社團失敗"; ?>
                 </div>
               <? } ?>
             <? } ?>
