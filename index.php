@@ -4,11 +4,15 @@ require_once('connection/connntpu.php');
 require_once("function/front_function.php");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!DOCTYPE html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
     <title>臺北大學社團活動相簿</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="臺北大學社團活動相簿" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://www.ntpu.edu.tw/extra/gallery/index.php"/>
+    <meta property="og:image" content="http://www.ntpu.edu.tw/extra/gallery/image/back_logo.png" />
+    <meta property="og:description" content="國立臺北大學 課外活動組 社團活動相簿網站" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <!--    <link href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">-->
 		<link rel="stylesheet" type="text/css" href="lib/samsungGrid/normalize.css" />
@@ -46,6 +50,7 @@ require_once("function/front_function.php");
     <script type="text/javascript" src="lib/jgallery/jgallery.js"></script>
     <script type="text/javascript" src="lib/jgallery/touchswipe.min.js"></script>
 		<script src="js/front.js"></script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-55d7dd4a6316bc47" async="async"></script>
 
 	</head>
 	<body class="night">
@@ -57,7 +62,7 @@ require_once("function/front_function.php");
 		<div class="main">
 			<div class="logo-wrap">
 				<a data-pjax href="index.php">
-					<img class="logo" src="image/back Logo.png">
+					<img class="logo" src="image/back_logo.png">
 				</a>
 			</div>
 			<div class="slideThree">
@@ -159,7 +164,7 @@ require_once("function/front_function.php");
 								$filename = $row_result_func7['filename'];
 								?>
 							<li class="photo" id="photo_<?echo $p_number?>">
-								<a photo-pjax href="?ct=<?echo $_GET['ct'] ?>&p=<?echo $p_number?>" style="border-color: <? selectcolor($at_number) ?>">
+								<a photo-pjax href="index.php?ct=<?echo $_GET['ct'] ?>&p=<?echo $p_number?>" style="border-color: <? selectcolor($at_number) ?>">
 									<div class="image" style="background-image: url('image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/<? echo $filename ?>');" alt="test">
 										<img src="image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/<? echo $filename ?>" style="width: 100%;">
 										<? $sql_func2 = "SELECT `at_club`, `at_name` FROM `album_type` WHERE `at_number` ='".$row_result_func7['album_type_number']."'";
@@ -182,7 +187,7 @@ require_once("function/front_function.php");
 								$filename = $row_result_func1['filename'];
 								?>
 							<li class="photo" id="photo_<?echo $p_number?>" code="<?echo $p_code ?>" c="<? echo $c_number?>" at="<?echo $at_number?>" p="<?echo $p_number?>">
-								<a photo-pjax href="?p=<?echo $p_number?>" style="border-color: <? selectcolor($at_number) ?>">
+								<a photo-pjax href="index.php?p=<?echo $p_number?>" style="border-color: <? selectcolor($at_number) ?>">
 									<div class="image" style="background-image: url('image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/<? echo $filename ?>');" alt="test">
 										<img src="image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/<? echo $filename ?>" style="width: 100%;">
 										<? $sql_func2 = "SELECT `at_club`, `at_name` FROM `album_type` WHERE `at_number` ='".$row_result_func1['album_type_number']."'";
@@ -204,7 +209,7 @@ require_once("function/front_function.php");
 								$filename = $row_result_func5['filename'];
 								?>
 							<li class="photo" id="photo_<?echo $p_number?>">
-								<a photo-pjax href="?p=<?echo $p_number?>" style="border-color: <? selectcolor($at_number) ?>">
+								<a photo-pjax href="index.php?p=<?echo $p_number?>" style="border-color: <? selectcolor($at_number) ?>">
 									<div class="image" style="background-image: url('image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/<? echo $filename ?>');" alt="test">
 										<img src="image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/<? echo $filename ?>" style="width: 100%;">
 										<? $sql_func2 = "SELECT `at_club`, `at_name` FROM `album_type` WHERE `at_number` ='".$row_result_func5['album_type_number']."'";
