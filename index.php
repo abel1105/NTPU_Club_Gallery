@@ -24,11 +24,16 @@ require_once("function/front_function.php");
 		<link rel="stylesheet" type="text/css" href="lib/gallery/elastislide.css" />
     <link rel="stylesheet" type="text/css" href="lib/jgallery/jgallery.min.css" />
 		<link href="lib/nprogress/nprogress.css" rel="stylesheet">
+    <!-- chosen -->
+    <link rel="stylesheet" type="text/css" href="lib/chosen/chosen.css" />
 		<link rel="stylesheet" type="text/css" href="css/front.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <!--    <script src="js/jquery1.11.2.min.js"></script>-->
 		<script src="lib/nprogress/nprogress.js"></script>
 		<script src="lib/modernizr/modernizr.custom.js"></script>
+    <!-- chosen -->
+    <script src="lib/chosen/chosen.jquery.js"></script>
+    <script src="lib/chosen/chosen.proto.js"></script>
 		<script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -107,22 +112,22 @@ require_once("function/front_function.php");
                     </a>
                     <img class="top_bar" src="image/bar01.png">
                     <? } if( showct(2)) {?>
-                    <a href="index.php?ct=2">
+                    <a data-pjax href="index.php?ct=2">
                         <i class='fa fa-bullhorn<? activect(2) ?>' data-content="康樂性社團"></i>
                     </a>
                     <img class="top_bar" src="image/bar02.png">
-                    <? } if( showct(study)) {?>
-                    <a href="index.php?ct=3">
-                        <i class='fa fa-pencil<? activect(study) ?>' data-content="學藝性社團"></i>
+                    <? } if( showct(3)) {?>
+                    <a data-pjax href="index.php?ct=3">
+                        <i class='fa fa-pencil<? activect(3) ?>' data-content="學藝性社團"></i>
                     </a>
                     <img class="top_bar" src="image/bar03.png">
                     <? } if( showct(4)) {?>
-                    <a href="index.php?ct=4">
+                    <a data-pjax href="index.php?ct=4">
                         <i class='fa fa-futbol-o<? activect(4) ?>' data-content="體育性社團"></i>
                     </a>
                     <img class="top_bar" src="image/bar04.png">
                     <? } if( showct(5)) {?>
-                    <a href="index.php?ct=5">
+                    <a data-pjax href="index.php?ct=5">
                         <i class='fa fa-heart<? activect(5) ?>' data-content="服務性社團"></i>
                     </a>
                     <img class="top_bar" src="image/bar05.png">
@@ -132,7 +137,7 @@ require_once("function/front_function.php");
                     </a>
                     <img class="top_bar" src="image/bar06.png">
                     <? } if( showct(7)) {?>
-                    <a href="index.php?ct=7">
+                    <a data-pjax href="index.php?ct=7">
                         <i class='fa fa-glass<? activect(7) ?>'data-content="校友會"></i>
                     </a>
                     <img class="top_bar" src="image/bar07.png">
@@ -280,7 +285,70 @@ require_once("function/front_function.php");
         </div>
 			</div><!-- /container -->
 		<!-- gallery -->
+      <div class="theme-config">
+        <div class="theme-config-box">
+          <div class="spin-icon">
+            <i class="fa fa-search"></i>
+          </div>
+            <div class="skin-setttings">
+              <div class="title">搜尋</div>
+              <div class="setings-item">
+                <select class="search club_search" data-placeholder="請選擇社團名稱" multiple>
+                  <?
+                    function getct_name($element){ return $element['ct_name']; }
+                    $ct_name = array_map('getct_name', $available_club);
+                    $ct_count = array_count_values($ct_name);
+                    $count = 0; 
+                    foreach($available_club as $club_data){ 
+                      if($count == 0) {
+                        echo '<optgroup label="'.$club_data['ct_name'].'">';
+                      }
+                        echo '<option value="'.$club_data['c_number'].'">'.$club_data['c_name'].'</option>';
+                        $count++;
+                      if($ct_count[$club_data['ct_name']] == $count) {
+                        echo '</optgroup>';
+                        $count = 0;
+                      }
+                    } 
+                  ?>
+                </select>
+                <select class="search activity_search" data-placeholder="請選擇活動名稱" multiple>
+                  <?
+                    function getc_name($element){ return $element['c_name']; }
+                    $c_name = array_map('getc_name', $available_album_type);
+                    $c_count = array_count_values($c_name);
+                    $count = 0; 
+                    foreach($available_album_type as $album_type_data){ 
+                      if($count == 0) {
+                        echo '<optgroup label="'.$album_type_data['c_name'].'">';
+                      }
+                        echo '<option value="'.$album_type_data['c_number'].'">'.$album_type_data['at_name'].'</option>';
+                        $count++;
+                      if($c_count[$album_type_data['c_name']] == $count) {
+                        echo '</optgroup>';
+                        $count = 0;
+                      }
+                    } 
+                  ?>
+                </select>
+                <button class="search_btn" type="submit">篩選</button>
+              </div>          
+            </div>
+        </div>
+    </div>
+      <script>
+        $(function(){
+          $(".search").chosen({no_results_text: "找不到您輸入的內容"});
+          $('.spin-icon').click(function () {
+            $(".theme-config-box").toggleClass("show");
+          });
+          $('.club_search').on('change',function(){
+            alert($('.club_search option:selected').text());
+          })
+        })
+      </script>
 		<!--
+
 		<script src="lib/gallery/jquery.tmpl.min.js"></script>
 		<script src="lib/gallery/jquery.easing.1.3.js"></script>
 		<script src="lib/gallery/jquery.elastislide.js"></script>
