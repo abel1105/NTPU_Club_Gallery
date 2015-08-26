@@ -80,7 +80,7 @@ if(isset($_POST['select_album_type']) && count($_POST['select_album_type']) > 0 
 
 //function 5 修改相簿
 if(isset($_GET['club_number']) && ($_GET['status'] == 'edit' || $_GET['status'] == 'photo' || $_GET['status'] == 'add') ){
-  $sql_func5 = "SELECT `at_number`, `at_name`, `at_club`, `club_number`, `sort` FROM `album_type` WHERE `at_number` = $album_number ";
+  $sql_func5 = "SELECT `at_number`, `at_name`, `at_club`, `club_number`,`at_info`, `sort` FROM `album_type` WHERE `at_number` = $album_number ";
   $result_func5 = mysql_query($sql_func5);
   $row_result_func5 = mysql_fetch_assoc($result_func5);
 }
@@ -265,7 +265,7 @@ if(isset($_FILES['files'])){
 }
 //function 13 update album
 if ((isset($_POST["update"])) && ($_POST["update"] == "edit") && ($_POST["status"] == "album")) {
-  $updateSQL = "UPDATE `album_type` SET at_name='" . $_POST['at_name']."',at_club='".$_POST['at_club']."', club_number='" .$_POST['club_number'] . "',time= CURRENT_TIMESTAMP, sort='". $_POST['sort'] . "' WHERE at_number ='". $album_number . "'";
+  $updateSQL = "UPDATE `album_type` SET at_name='" . $_POST['at_name']."',at_club='".$_POST['at_club']."', club_number='" .$_POST['club_number'] . "', at_info='".$_POST['at_info'] . "', time= CURRENT_TIMESTAMP, sort='". $_POST['sort'] . "' WHERE at_number ='". $album_number . "'";
 
   $Result1 = mysql_query($updateSQL) or die(mysql_error());
 	if($Result1 == false){
@@ -288,7 +288,7 @@ if ((isset($_POST["update"])) && ($_POST["update"] == "edit") && ($_POST["status
 }
 //function 15 album_type_add
 if ((isset($_POST["insert"])) && ($_POST["insert"] == "add") && ($_POST["status"] == "album")) {
-  $insertSQL = "INSERT INTO `album_type` (`at_number`, `at_name`, `at_club`, `club_number`, `time`, `sort`) VALUES (NULL," . "'".$_POST['at_name']."'," . "'".$_POST['at_club']."'," . "'".$_POST['club_number'] . "'," . "CURRENT_TIMESTAMP, '". $_POST['sort'] . "')";
+  $insertSQL = "INSERT INTO `album_type` (`at_number`, `at_name`, `at_club`, `club_number`,`at_info`, `time`, `sort`) VALUES (NULL," . "'".$_POST['at_name']."'," . "'".$_POST['at_club']."'," . "'".$_POST['club_number'] . "','".$_POST['at_info'] ."',". "CURRENT_TIMESTAMP, '". $_POST['sort'] . "')";
 
   $Result1 = mysql_query($insertSQL) or die(mysql_error());
   if($Result1 == false){
