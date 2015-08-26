@@ -2,6 +2,9 @@
 * {
   font-family: 'Noto Sans CJK TC', Helvetica, Microsoft JhengHei;
 }
+body{
+  overflow-x: hidden; 
+}
 ul {
   padding: 0;
   margin: 0;
@@ -612,4 +615,71 @@ ul.club li a, span.control a {
   .jgallery .zoom-container .nav-bottom > .title{
     font-size: 1.2em !important; 
   }
+}
+
+/** Addthis */
+.at4-share-outer.addthis-smartlayers.addthis-smartlayers-desktop {
+  opacity: 0.8;
+}
+.at4-share-outer.addthis-smartlayers.addthis-smartlayers-desktop:hover {
+  opacity: 1;
+}
+
+/** search bar  **/
+.theme-config {
+  position: absolute;
+  top: 90px;
+  right: 0px;
+}
+.theme-config-box {
+  margin-right: -220px;
+  position: relative;
+  z-index: 2000;
+  transition-duration: 0.8s;
+}
+.theme-config-box.show {
+  margin-right: 0px;
+}
+.spin-icon {
+  background: #E86178;
+  position: absolute;
+  padding: 11px 10px 11px 13px;
+  border-radius: 20px 0px 0px 20px;
+  font-size: 16px;
+  top: 0;
+  left: 0px;
+  width: 40px;
+  color: #fff;
+  cursor: pointer;
+}
+.skin-setttings {
+  width: 220px;
+  margin-left: 40px;
+  background: #fff;
+}
+.skin-setttings .title {
+  background: #efefef;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 600;
+  display: block;
+  padding: 10px 15px;
+  font-size: 15px;
+}
+.setings-item {
+  padding: 10px 30px;
+}
+select.search {
+  width: 100%;
+  margin: 30px auto;
+}
+.search_btn {
+  margin: 10px auto;
+  background: #E86178;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  padding: 5px 10px;
+  width: 50px;
+  display: block;
 }
