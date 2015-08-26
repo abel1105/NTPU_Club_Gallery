@@ -19,11 +19,20 @@ function selectcolor($e){
   elseif ($e % 7 == 6) { echo "#ED9BAB"; }
 }
 // 判斷社團類別下的社團有沒有show
+
 function showct($i) {
-    $sql_query2 = "SELECT `ct_show` FROM `club_type` WHERE `ct_number` = '$i'";
-    $result2 = mysql_query($sql_query2);
-    $row_result2 = mysql_fetch_assoc($result2);
-    return $row_result2['ct_show'];
+  $sql_query2 = "SELECT DISTINCT `c_type` FROM `club` WHERE `c_show` = 1 ";
+  $result2 = mysql_query($sql_query2);
+  $j =0;
+  while($row_result2 = mysql_fetch_assoc($result2)){
+    $club_data[$j] = $row_result2;
+    $j++;
+  }
+  foreach ($club_data as $item){
+    if (isset($item['c_type']) && $item['c_type'] == $i){
+      return true;
+    }
+  }
 }
 // 判斷現在社團類別 並給予顏色
 function activect($i) {
@@ -90,4 +99,25 @@ if (isset($_GET['ct']) && ($_GET['ct'] != '')){
   
   $result_func7 = mysql_query($sql_func7);
 }
+
+//function 8 [搜尋]查詢開放的社團分類下開放的社團
+$sql_func8 = "SELECT * FROM `club`,`club_type` WHERE `c_show` = 1 and `ct_number` = `c_type` ORDER BY `ct_number` ASC";
+$result_func8 = mysql_query($sql_func8);
+$i = 0;
+while($row_result_func8 = mysql_fetch_assoc($result_func8)){
+  $available_club[$i] = $row_result_func8 ;
+  $i++;
+};
+
+//function 9 [搜尋]查詢開放的社團分類下開放的社團的社團活動
+$sql_func9 = "SELECT `c_number`,`c_show`,`c_name`,`at_number`,`at_name` FROM `club`,`album_type`,`club_type` WHERE `album_type`.`club_number` = `club`.`c_number` and `ct_number` = `c_type` and `c_show` = 1 ORDER BY `c_number` ASC";
+$result_func9 = mysql_query($sql_func9);
+$i = 0;
+while($row_result_func9 = mysql_fetch_assoc($result_func9)){
+  $available_album_type[$i] = $row_result_func9 ;
+  $i++;
+};
+
 ?>
+
+
