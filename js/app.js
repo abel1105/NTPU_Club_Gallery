@@ -118,21 +118,31 @@ function createPie(dataElement, pieElement) {
 function gplus_is_pjax(){
    return array_key_exists('HTTP_X_PJAX', $_SERVER) && $_SERVER['HTTP_X_PJAX'] === 'true';
 }
-function pushSpotStatus(ct_number,c_number,id){
+function pushSpotStatus(c_number,id){
   $.ajax({
-    data: {ct: ct_number, c: c_number},
+    data: {c: c_number, id: id},
     type: 'GET',
     dataType: 'json',
     contentType: "charset=utf-8",
     url: '../function/spotStatus.php',
     success: function(data) {
+      console.log(data);
+      
+      if(data.alert){
+        alert('該社團裡沒有照片，無法設為公開');
+      }else{
+        addactive(data.id);
+      }
+      function addactive(id){
+        if (jQuery('#'+id).hasClass('active')){
+          jQuery('#'+id).removeClass('active').addClass('noactive');  
+        }else{
+          jQuery('#'+id).removeClass('noactive').addClass('active');
+        }
+      }
     }
   })
-  if (jQuery('#'+id).hasClass('active')){
-    jQuery('#'+id).removeClass('active').addClass('noactive');  
-  }else{
-    jQuery('#'+id).removeClass('noactive').addClass('active');
-  }
+  
   }
 // initial pjax
   $(document).pjax('a[data-pjax]', '#wrap', {fragment:'#wrap', timeout:5000});
