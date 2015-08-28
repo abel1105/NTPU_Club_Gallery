@@ -617,14 +617,23 @@ ul.club li a, span.control a {
   }
 }
 
-/** Addthis */
-.at4-share-outer.addthis-smartlayers.addthis-smartlayers-desktop {
+/** Sumome Customize **/
+body.night .sumome-share-client-animated.sumome-share-client-share.sumome-share-client-share-share.sumome-share-client-count {
+  color: #fff !important;
+}
+body.night .sumome-share-client-wrapper.sumome-share-client-wrapper-left-page{
   opacity: 0.8;
 }
-.at4-share-outer.addthis-smartlayers.addthis-smartlayers-desktop:hover {
+
+body.night .sumome-share-client-wrapper.sumome-share-client-wrapper-left-page:hover {
   opacity: 1;
 }
-
+body.image .sumome-share-client-wrapper {
+  display: none;
+}
+body.front .sumome-image-sharer {
+  display: none;
+}
 /** search bar  **/
 .theme-config {
   position: absolute;
@@ -634,7 +643,7 @@ ul.club li a, span.control a {
 .theme-config-box {
   margin-right: -220px;
   position: relative;
-  z-index: 2000;
+  z-index: 50;
   transition-duration: 0.8s;
 }
 .theme-config-box.show {
@@ -651,6 +660,12 @@ ul.club li a, span.control a {
   width: 40px;
   color: #fff;
   cursor: pointer;
+}
+body.night .spin-icon {
+  opacity: 0.8;
+}
+body.night .spin-icon:hover, body.night .theme-config-box.show .spin-icon {
+  opacity: 1; 
 }
 .skin-setttings {
   width: 220px;
