@@ -18,10 +18,10 @@ function changephoto(){
 }
 function changeBodyColor(){
   if($('body').hasClass('light')){
-    $('body').removeClass().addClass('night');
+    $('body').removeClass('light').addClass('night');
     localStorage.setItem('bg', 'night');
   }else{
-    $('body').removeClass().addClass('light');
+    $('body').removeClass('night').addClass('light');
     localStorage.setItem('bg', 'light');
   }
 }
@@ -56,10 +56,10 @@ $(window).on('load resize pjax:end',function(){
 jQuery(document).ready(function($) {
     var bg = localStorage.getItem('bg');
     if(bg == 'light'){
-        $('body').removeClass().addClass('light');
+        $('body').removeClass('night').addClass('light');
         $('#slideThree').prop('checked',false);
     }else {
-        $('body').removeClass().addClass('night');
+        $('body').removeClass('light').addClass('night');
         $('#slideThree').prop('checked',true);
     }
   // initial club type title
@@ -80,7 +80,10 @@ jQuery(document).ready(function($) {
   // initial pjax
   if ($.support.pjax) {
     $(document).pjax('a[data-pjax]', '#container', {fragment:'#container', timeout:5000});
+      
     $(document).pjax('a[photo-pjax]', '#photo', {fragment:'#photo', timeout:5000, scrollTo: false});
+      
+    
     //progress bar
     $(document).on('pjax:start', function() {
       NProgress.start();
@@ -90,6 +93,11 @@ jQuery(document).ready(function($) {
       ga('send', 'pageview');
       NProgress.done();
       clubtitle();
+      if ($('#photo').text().trim() == ''){
+        $('body').removeClass('image').addClass('front');
+      }else {
+        $('body').removeClass('front').addClass('image');
+      }
       if ( window.location.pathname == "/extra/gallery/index.php"){
        new GridScrollFx( document.getElementById( 'grid' ), {
          viewportFactor : 0.4
