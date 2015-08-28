@@ -1,8 +1,7 @@
 <?php
 require_once('connection/connntpu.php');
-//inc
-require_once("function/front_function.php");
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<head>
     <title>臺北大學社團活動相簿</title>
@@ -55,10 +54,17 @@ require_once("function/front_function.php");
     <script type="text/javascript" src="lib/jgallery/jgallery.js"></script>
     <script type="text/javascript" src="lib/jgallery/touchswipe.min.js"></script>
 		<script src="js/front.js"></script>
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-55d7dd4a6316bc47" async="async"></script>
-
+    <script src="//load.sumome.com/" data-sumo-site-id="b5dce7256cabf394a582aa17c7c13cd6c876b3b99da8e932e5562ae33a53caa7" async="async"></script>
+<!--    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-55d7dd4a6316bc47" async="async"></script>-->
+<?php 
+  if(isset($_GET['p']) && ($_GET['p'] != '')){
+    $bodyClass = "image";
+  } else {
+    $bodyClass = "front";
+  } 
+?>
 	</head>
-	<body class="night">
+	<body class="night <?echo $bodyClass ?>">
 <!--
 		<div id="large-header" class="large-header">
 			<canvas id="demo-canvas"></canvas>
@@ -104,6 +110,7 @@ require_once("function/front_function.php");
 			<button class="menu-button" id="open-button">Open Menu</button>
 		-->
 			<div id="container" class="container">
+        <?require_once("function/front_function.php"); ?>
                 <div class="club-wrap">
                     <img class="top_bar" src="image/bar00.png">
                     <? if( showct(1)) {?>
@@ -168,66 +175,92 @@ require_once("function/front_function.php");
 								$p_code = $row_result_func7['p_code'];
 								$filename = $row_result_func7['filename'];
 								?>
-							<li class="photo" id="photo_<?echo $p_number?>">
-								<a photo-pjax href="index.php?ct=<?echo $_GET['ct'] ?>&p=<?echo $p_number?>" style="border-color: <? selectcolor($at_number) ?>">
-									<div class="image" style="background-image: url('image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/<? echo $filename ?>');" alt="test">
-										<img src="image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/<? echo $filename ?>" style="width: 100%;">
-										<? $sql_func2 = "SELECT `at_club`, `at_name` FROM `album_type` WHERE `at_number` ='".$row_result_func7['album_type_number']."'";
-										$result_func2 = mysql_query($sql_func2);
-										$row_result_func2 = mysql_fetch_assoc($result_func2);
-										?>
-										<h3 style="background: <? selectcolor($at_number) ?>"><?echo $row_result_func2['at_name']?></h3>
-										<span style="background: <? selectcolor($at_number) ?>"><? echo $row_result_func2['at_club']?></span>
-									</div>
-								</a>
-							</li>
-            <? } ?>
-                        <? } elseif ($_GET['c'] == '') {
-							$result_func1 = loadimage(0, 30);
-				            while( $row_result_func1 = mysql_fetch_assoc($result_func1) ) {
+                <li class="photo" id="photo_<?echo $p_number?>">
+                  <a photo-pjax href="index.php?ct=<?echo $_GET['ct'] ?>&p=<?echo $p_number?>" style="border-color: <? selectcolor($at_number) ?>">
+                    <div class="image" style="background-image: url('image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/<? echo $filename ?>');" alt="test">
+                      <img src="image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/<? echo $filename ?>" style="width: 100%;">
+                      <? $sql_func2 = "SELECT `at_club`, `at_name` FROM `album_type` WHERE `at_number` ='".$row_result_func7['album_type_number']."'";
+                      $result_func2 = mysql_query($sql_func2);
+                      $row_result_func2 = mysql_fetch_assoc($result_func2);
+                      ?>
+                      <h3 style="background: <? selectcolor($at_number) ?>"><?echo $row_result_func2['at_name']?></h3>
+                      <span style="background: <? selectcolor($at_number) ?>"><? echo $row_result_func2['at_club']?></span>
+                    </div>
+                  </a>
+                </li>
+              <? } ?>
+            <? } if (isset($params['c']) && ($params['c'] != '')) { ?>
+              <? for($i =0; $i < $count_c; $i++){ ?>
+                <? while( $row_result_func5[$i] = mysql_fetch_assoc($result_func5[$i]) ) {
+                  $p_number[$i] = $row_result_func5[$i]['p_number'];
+                  $at_number[$i] = $row_result_func5[$i]['album_type_number'];
+                  $c_number[$i] = $row_result_func5[$i]['club_number'];
+                  $p_code[$i] = $row_result_func5[$i]['p_code'];
+                  $filename[$i] = $row_result_func5[$i]['filename'];
+                  ?>
+                  <li class="photo" id="photo_<?echo $p_number[$i]?>">
+                    <a photo-pjax href="index.php?p=<?echo $p_number[$i]?>" style="border-color: <? selectcolor($at_number[$i]) ?>">
+                      <div class="image" style="background-image: url('image/<?echo $p_code[$i] ?>/<? echo $c_number[$i]?>/<?echo $at_number[$i]?>/<? echo $filename[$i] ?>');" alt="test">
+                        <img src="image/<?echo $p_code[$i] ?>/<? echo $c_number[$i]?>/<?echo $at_number[$i]?>/<? echo $filename[$i] ?>" style="width: 100%;">
+                        <? $sql_func2[$i] = "SELECT `at_club`, `at_name` FROM `album_type` WHERE `at_number` ='".$row_result_func5[$i]['album_type_number']."'";
+                        $result_func2[$i] = mysql_query($sql_func2[$i]);
+                        $row_result_func2[$i] = mysql_fetch_assoc($result_func2[$i]);
+                        ?>
+                        <h3 style="background: <? selectcolor($at_number[$i]) ?>"><?echo $row_result_func2[$i]['at_name']?></h3>
+                        <span style="background: <? selectcolor($at_number[$i]) ?>"><? echo $row_result_func2[$i]['at_club']?></span>
+                      </div>
+                    </a>
+                  </li>
+                <? } ?>
+              <? } ?>
+            <? } if (isset($params['at']) && ($params['at'] != '')) { ?>
+              <? for($i =0; $i < $count_at; $i++){ ?>
+                <? while( $row_result_func10[$i] = mysql_fetch_assoc($result_func10[$i]) ) {
+                  $p_number[$i] = $row_result_func10[$i]['p_number'];
+                  $at_number[$i] = $row_result_func10[$i]['album_type_number'];
+                  $c_number[$i] = $row_result_func10[$i]['club_number'];
+                  $p_code[$i] = $row_result_func10[$i]['p_code'];
+                  $filename[$i] = $row_result_func10[$i]['filename'];
+                  ?>
+                  <li class="photo" id="photo_<?echo $p_number[$i]?>">
+                    <a photo-pjax href="index.php?p=<?echo $p_number[$i]?>" style="border-color: <? selectcolor($at_number[$i]) ?>">
+                      <div class="image" style="background-image: url('image/<?echo $p_code[$i] ?>/<? echo $c_number[$i]?>/<?echo $at_number[$i]?>/<? echo $filename[$i] ?>');" alt="test">
+                        <img src="image/<?echo $p_code[$i] ?>/<? echo $c_number[$i]?>/<?echo $at_number[$i]?>/<? echo $filename[$i] ?>" style="width: 100%;">
+                        <? $sql_func2[$i] = "SELECT `at_club`, `at_name` FROM `album_type` WHERE `at_number` ='".$row_result_func10[$i]['album_type_number']."'";
+                        $result_func2[$i] = mysql_query($sql_func2[$i]);
+                        $row_result_func2[$i] = mysql_fetch_assoc($result_func2[$i]);
+                        ?>
+                        <h3 style="background: <? selectcolor($at_number[$i]) ?>"><?echo $row_result_func2[$i]['at_name']?></h3>
+                        <span style="background: <? selectcolor($at_number[$i]) ?>"><? echo $row_result_func2[$i]['at_club']?></span>
+                      </div>
+                    </a>
+                  </li>
+                <? } ?>
+              <? } ?>
+						<? }if( empty($params) || (count($params) == 0)) { ?> 
+              <? $result_func1 = loadimage(0, 30);
+				        while( $row_result_func1 = mysql_fetch_assoc($result_func1) ) {
 								$p_number = $row_result_func1['p_number'];
 								$at_number = $row_result_func1['album_type_number'];
 								$c_number = $row_result_func1['club_number'];
 								$p_code = $row_result_func1['p_code'];
 								$filename = $row_result_func1['filename'];
 								?>
-							<li class="photo" id="photo_<?echo $p_number?>" code="<?echo $p_code ?>" c="<? echo $c_number?>" at="<?echo $at_number?>" p="<?echo $p_number?>">
-								<a photo-pjax href="index.php?p=<?echo $p_number?>" style="border-color: <? selectcolor($at_number) ?>">
-									<div class="image" style="background-image: url('image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/<? echo $filename ?>');" alt="test">
-										<img src="image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/<? echo $filename ?>" style="width: 100%;">
-										<? $sql_func2 = "SELECT `at_club`, `at_name` FROM `album_type` WHERE `at_number` ='".$row_result_func1['album_type_number']."'";
-										$result_func2 = mysql_query($sql_func2);
-										$row_result_func2 = mysql_fetch_assoc($result_func2);
-										?>
-										<h3 style="background: <? selectcolor($at_number) ?>"><?echo $row_result_func2['at_name']?></h3>
-										<span style="background: <? selectcolor($at_number) ?>"><? echo $row_result_func2['at_club']?></span>
-									</div>
-								</a>
-							</li>
-							<? } ?>
-						<? }else { ?>
-							<? while( $row_result_func5 = mysql_fetch_assoc($result_func5) ) {
-								$p_number = $row_result_func5['p_number'];
-								$at_number = $row_result_func5['album_type_number'];
-								$c_number = $row_result_func5['club_number'];
-								$p_code = $row_result_func5['p_code'];
-								$filename = $row_result_func5['filename'];
-								?>
-							<li class="photo" id="photo_<?echo $p_number?>">
-								<a photo-pjax href="index.php?p=<?echo $p_number?>" style="border-color: <? selectcolor($at_number) ?>">
-									<div class="image" style="background-image: url('image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/<? echo $filename ?>');" alt="test">
-										<img src="image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/<? echo $filename ?>" style="width: 100%;">
-										<? $sql_func2 = "SELECT `at_club`, `at_name` FROM `album_type` WHERE `at_number` ='".$row_result_func5['album_type_number']."'";
-										$result_func2 = mysql_query($sql_func2);
-										$row_result_func2 = mysql_fetch_assoc($result_func2);
-										?>
-										<h3 style="background: <? selectcolor($at_number) ?>"><?echo $row_result_func2['at_name']?></h3>
-										<span style="background: <? selectcolor($at_number) ?>"><? echo $row_result_func2['at_club']?></span>
-									</div>
-								</a>
-							</li>
-							<? } ?>
-						<? } ?>
+                <li class="photo" id="photo_<?echo $p_number?>" code="<?echo $p_code ?>" c="<? echo $c_number?>" at="<?echo $at_number?>" p="<?echo $p_number?>">
+                  <a photo-pjax href="index.php?p=<?echo $p_number?>" style="border-color: <? selectcolor($at_number) ?>">
+                    <div class="image" style="background-image: url('image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/<? echo $filename ?>');" alt="test">
+                      <img src="image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/<? echo $filename ?>" style="width: 100%;">
+                      <? $sql_func2 = "SELECT `at_club`, `at_name` FROM `album_type` WHERE `at_number` ='".$row_result_func1['album_type_number']."'";
+                      $result_func2 = mysql_query($sql_func2);
+                      $row_result_func2 = mysql_fetch_assoc($result_func2);
+                      ?>
+                      <h3 style="background: <? selectcolor($at_number) ?>"><?echo $row_result_func2['at_name']?></h3>
+                      <span style="background: <? selectcolor($at_number) ?>"><? echo $row_result_func2['at_club']?></span>
+                    </div>
+                  </a>
+                </li>
+              <? } ?>
+            <? } ?>
 					</ul>
 				</section>
         <div id="photo">
@@ -261,21 +294,20 @@ require_once("function/front_function.php");
                 tooltipRandom: '隨機',
                 tooltipClose: '關閉',
                 tooltipFullScreen: '全螢幕',
-                closeGallery: function() {
-                  $('body').css('overflow', 'auto');
+                closeGallery: function() { 
+                  $('body').attr('style', '');
+                  $('.sumome-image-sharer').hide();
+                  $('.sumome-share-client-wrapper').show();
+                },
+                showGallery: function() {
+                  $('.sumome-image-sharer').show();
+                  $('.sumome-share-client-wrapper').hide();
                 }
               })
             ).then(function(){
-              
-               <?if($_GET['ct'] != ''){ ?>
-                $('div.nav span.fa.fa-times.jgallery-close.jgallery-btn.jgallery-btn-small').wrap('<a photo-pjax href="index.php?ct=<?echo $_GET['ct']?>"></a>');
-              <? }else { ?>
-                $('div.nav span.fa.fa-times.jgallery-close.jgallery-btn.jgallery-btn-small').wrap('<a photo-pjax href="index.php"></a>');
-              <? } ?>
               $('.fa.resize.jgallery-btn.jgallery-btn-small.fa-search-plus').addClass('hidden-xs');
               $('.fa.change-mode.jgallery-btn.jgallery-btn-small.fa-expand').addClass('hidden-xs');
               $('.fa.fa-th.full-screen.jgallery-btn.jgallery-btn-small').addClass('hidden-xs');
-              
               $('body').css('overflow', 'hidden');
             });
           } );
@@ -283,9 +315,23 @@ require_once("function/front_function.php");
           </script>
           <? } ?>
         </div>
+        <script>
+          $(document).on('ready pjax:end', function(){
+            <?if($_GET['ct'] != ''){ ?>
+                $('div.nav span.fa.fa-times.jgallery-close.jgallery-btn.jgallery-btn-small').wrap('<a photo-pjax href="index.php?ct=<?echo $_GET['ct']?>"></a>');
+                console.log('ct');
+              <? } elseif ( ($_GET['p'] != '') or $_SERVER['QUERY_STRING'] == ''){ ?>
+                $('div.nav span.fa.fa-times.jgallery-close.jgallery-btn.jgallery-btn-small').wrap('<a photo-pjax href="index.php"></a>');
+                console.log('p');
+              <? }else { ?>
+                $('div.nav span.fa.fa-times.jgallery-close.jgallery-btn.jgallery-btn-small').wrap('<a photo-pjax href="index.php?<?echo $_SERVER['QUERY_STRING']?>"></a>');
+                console.log('query');
+              <? } ?>
+          });
+        </script>
 			</div><!-- /container -->
 		<!-- gallery -->
-      <div class="theme-config">
+      <div class="theme-config hidden-xs">
         <div class="theme-config-box">
           <div class="spin-icon">
             <i class="fa fa-search"></i>
@@ -293,45 +339,47 @@ require_once("function/front_function.php");
             <div class="skin-setttings">
               <div class="title">搜尋</div>
               <div class="setings-item">
-                <select class="search club_search" data-placeholder="請選擇社團名稱" multiple>
-                  <?
-                    function getct_name($element){ return $element['ct_name']; }
-                    $ct_name = array_map('getct_name', $available_club);
-                    $ct_count = array_count_values($ct_name);
-                    $count = 0; 
-                    foreach($available_club as $club_data){ 
-                      if($count == 0) {
-                        echo '<optgroup label="'.$club_data['ct_name'].'">';
-                      }
-                        echo '<option value="'.$club_data['c_number'].'">'.$club_data['c_name'].'</option>';
-                        $count++;
-                      if($ct_count[$club_data['ct_name']] == $count) {
-                        echo '</optgroup>';
-                        $count = 0;
-                      }
-                    } 
-                  ?>
-                </select>
-                <select class="search activity_search" data-placeholder="請選擇活動名稱" multiple>
-                  <?
-                    function getc_name($element){ return $element['c_name']; }
-                    $c_name = array_map('getc_name', $available_album_type);
-                    $c_count = array_count_values($c_name);
-                    $count = 0; 
-                    foreach($available_album_type as $album_type_data){ 
-                      if($count == 0) {
-                        echo '<optgroup label="'.$album_type_data['c_name'].'">';
-                      }
-                        echo '<option value="'.$album_type_data['c_number'].'">'.$album_type_data['at_name'].'</option>';
-                        $count++;
-                      if($c_count[$album_type_data['c_name']] == $count) {
-                        echo '</optgroup>';
-                        $count = 0;
-                      }
-                    } 
-                  ?>
-                </select>
-                <button class="search_btn" type="submit">篩選</button>
+                <form id="search" method="get">
+                  <select class="search club_search" name="c" data-placeholder="請選擇社團名稱" multiple>
+                    <?
+                      function getct_name($element){ return $element['ct_name']; }
+                      $ct_name = array_map('getct_name', $available_club);
+                      $ct_count = array_count_values($ct_name);
+                      $count = 0; 
+                      foreach($available_club as $club_data){ 
+                        if($count == 0) {
+                          echo '<optgroup label="'.$club_data['ct_name'].'">';
+                        }
+                          echo '<option value="'.$club_data['c_number'].'">'.$club_data['c_name'].'</option>';
+                          $count++;
+                        if($ct_count[$club_data['ct_name']] == $count) {
+                          echo '</optgroup>';
+                          $count = 0;
+                        }
+                      } 
+                    ?>
+                  </select>
+                  <select class="search activity_search" name="at" data-placeholder="請選擇活動名稱" multiple>
+                    <?
+                      function getc_name($element){ return $element['c_name']; }
+                      $c_name = array_map('getc_name', $available_album_type);
+                      $c_count = array_count_values($c_name);
+                      $count = 0; 
+                      foreach($available_album_type as $album_type_data){ 
+                        if($count == 0) {
+                          echo '<optgroup label="'.$album_type_data['c_name'].'">';
+                        }
+                          echo '<option value="'.$album_type_data['at_number'].'">'.$album_type_data['at_name'].'</option>';
+                          $count++;
+                        if($c_count[$album_type_data['c_name']] == $count) {
+                          echo '</optgroup>';
+                          $count = 0;
+                        }
+                      } 
+                    ?>
+                  </select>
+                  <button class="search_btn" type="submit">篩選</button>
+                </form>
               </div>          
             </div>
         </div>

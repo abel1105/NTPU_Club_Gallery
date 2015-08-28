@@ -8,6 +8,21 @@ $json = new Services_JSON();
 $sql_query1 = "SELECT * FROM `club_type`";
 $result1 = mysql_query($sql_query1);
 $result3 = mysql_query($sql_query1);
+// get params
+$query  = explode('&', $_SERVER['QUERY_STRING']);
+if(isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != ''){
+  $params = array();
+
+  foreach( $query as $param )
+  {
+    list($name, $value) = explode('=', $param, 2);
+    if($name == '_pjax'){
+    }else{
+      $params[urldecode($name)][] = urldecode($value);
+    }
+  }
+//  print_r($params);
+}
 //color function
 function selectcolor($e){
   if ($e % 7 == 0) {  echo "#E6546A"; }
@@ -83,19 +98,22 @@ if (isset($_GET['p']) && ($_GET['p'] != '')){
   $row_result_func6 = mysql_fetch_assoc($result_func6);
   
 }
-
-if (isset($_GET['c']) && ($_GET['c'] != '')){
-  // function 4 查看club number對應的社團名子
-  $sql_func4 = "SELECT * FROM `club` WHERE `c_number` = '". $_GET['c'] . "'";
-  $result_func4 = mysql_query($sql_func4);
-  $row_result_func4 = mysql_fetch_assoc($result_func4);
-  //function 5 查看 社團下 有多少相簿 然後各取一筆資料
-  $sql_func5 = "SELECT * FROM ( SELECT * FROM `photo` WHERE `album_type_number` IN ( SELECT DISTINCT `album_type_number` FROM `photo` WHERE `club_number` = '".$_GET['c'] . "') ORDER BY RAND( ) ) AS T GROUP BY `album_type_number` ORDER BY `time` DESC";
-  $result_func5 = mysql_query($sql_func5);
+// [搜尋]
+if (isset($params['c']) && ($params['c'] != '')){
+  $count_c = count($params['c']);
+  for($i =0; $i < $count_c; $i++){
+    // function 4 查看club number對應的社團名子
+    $sql_func4[$i] = "SELECT * FROM `club` WHERE `c_number` = '". $params['c'][$i] . "'";
+    $result_func4[$i] = mysql_query($sql_func4[$i]);
+    $row_result_func4[$i] = mysql_fetch_assoc($result_func4[$i]);
+    //function 5 查看 社團下 有多少相簿 然後各取一筆資料
+    $sql_func5[$i] = "SELECT * FROM ( SELECT * FROM `photo` WHERE `album_type_number` IN ( SELECT DISTINCT `album_type_number` FROM `photo` WHERE `club_number` = '".$params['c'][$i] . "') ORDER BY RAND( ) ) AS T GROUP BY `album_type_number` ORDER BY `time` DESC";
+    $result_func5[$i] = mysql_query($sql_func5[$i]);
+  }
 }
-if (isset($_GET['ct']) && ($_GET['ct'] != '')){
+if (isset($params['ct'][0]) && ($params['ct'][0] != '')){
   //function 7 查看社團類別下的社團 
-  $sql_func7 = "SELECT * FROM(SELECT * FROM `photo` WHERE `album_type_number` in (SELECT `at_number` FROM `album_type` WHERE `club_number` in ( SELECT `c_number` FROM `club` WHERE `c_type`= ". $_GET['ct'] ." and `c_show` = 1)) ORDER BY RAND())as T GROUP BY `album_type_number` ORDER BY `time` DESC";
+  $sql_func7 = "SELECT * FROM(SELECT * FROM `photo` WHERE `album_type_number` in (SELECT `at_number` FROM `album_type` WHERE `club_number` in ( SELECT `c_number` FROM `club` WHERE `c_type`= ". $params['ct'][0] ." and `c_show` = 1)) ORDER BY RAND())as T GROUP BY `album_type_number` ORDER BY `time` DESC";
   
   $result_func7 = mysql_query($sql_func7);
 }
@@ -117,7 +135,16 @@ while($row_result_func9 = mysql_fetch_assoc($result_func9)){
   $available_album_type[$i] = $row_result_func9 ;
   $i++;
 };
-
+//[搜尋]
+if (isset($params['at']) && ($params['at'] != '')){
+  $count_at = count($params['at']);
+  for($i =0; $i < $count_at; $i++){
+    // function 10 查看album number 對應的一個隨機photo
+    $sql_func10[$i] = "SELECT * FROM `photo` WHERE `album_type_number` = '". $params['at'][$i] . "' ORDER BY RAND() LIMIT 0,1";
+    $result_func10[$i] = mysql_query($sql_func10[$i]);
+    
+  }
+}
 ?>
 
 
