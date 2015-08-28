@@ -246,10 +246,8 @@ height		: 300px;
 font-size	: 11px;
 }
 #return_newchart {
-width		: 70%;
 height		: 300px;
 font-size	: 15px;
-margin: 0 auto;
 }
 #topchart {
   width: 100%;
@@ -257,10 +255,8 @@ margin: 0 auto;
   font-size: 11px;
 }
 #devicechart {
-  width: 70%;
   height: 300px;
   font-size: 15px;
-  margin: 0 auto;
 }
 .amcharts-pie-slice {
   transform: scale(1);
