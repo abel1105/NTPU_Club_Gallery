@@ -1,7 +1,9 @@
 <?php
 require_once('connection/connntpu.php');
+
 ?>
 
+        <?require_once("function/front_function.php"); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<head>
     <title>臺北大學社團活動相簿</title>
@@ -13,7 +15,8 @@ require_once('connection/connntpu.php');
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<!--    <link href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap-datapicker/css/bootstrap-datetimepicker.min.css">
 		<link rel="stylesheet" type="text/css" href="lib/samsungGrid/normalize.css" />
 		<link rel="stylesheet" type="text/css" href="lib/samsungGrid/component.css" />
 		<link rel="stylesheet" type="text/css" href="lib/font-awesome-4.2.0/css/font-awesome.min.css" />
@@ -27,7 +30,12 @@ require_once('connection/connntpu.php');
     <link rel="stylesheet" type="text/css" href="lib/chosen/chosen.css" />
 		<link rel="stylesheet" type="text/css" href="css/front.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<!--    <script src="js/jquery1.11.2.min.js"></script>-->
+    <!-- bootstrap -->
+    <script src="lib/bootstrap-datapicker/js/moment-with-locales.min.js"></script>
+    <script src="lib/bootstrap-3.3.5-dist/js/transition.js"></script>
+    <script src="lib/bootstrap-3.3.5-dist/js/collapse.js"></script>
+    <script src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script src="lib/bootstrap-datapicker/js/bootstrap-datetimepicker.min.js"></script>
 		<script src="lib/nprogress/nprogress.js"></script>
 		<script src="lib/modernizr/modernizr.custom.js"></script>
     <!-- chosen -->
@@ -47,7 +55,7 @@ require_once('connection/connntpu.php');
 			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 
-        <script src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+        
 		<!-- pjax -->
 		<script src="lib/pjax/jquery.pjax.js"></script>
     <!-- gallery -->
@@ -64,7 +72,7 @@ require_once('connection/connntpu.php');
   } 
 ?>
 	</head>
-	<body class="night <?echo $bodyClass ?>">
+	<body class="night <?echo $bodyClass ?>"> 
 <!--
 		<div id="large-header" class="large-header">
 			<canvas id="demo-canvas"></canvas>
@@ -80,37 +88,7 @@ require_once('connection/connntpu.php');
 				<input type="checkbox" value="None" id="slideThree" name="check"/>
 				<label for="slideThree" onclick="changeBodyColor();"></label>
 			</div>
-			<!--
-			<div class="menu-wrap">
-				<nav class="menu">
-					<div class="icon-list">
-						<?
-							while($row_result1 = mysql_fetch_assoc($result1)){
-						?>
-							<div class="club_type">
-								<div class="club_type_title">
-									<span class="club_type_span"><? echo $row_result1["ct_name"]; ?></span>
-								</div>
-								<ul class="club" style="display: none;">
-									<?
-									$sql_query2 = "SELECT * FROM `club` WHERE c_type = '".$row_result1['ct_number']."' ";
-									$result2 = mysql_query($sql_query2);
-									while($row_result2 = mysql_fetch_assoc($result2)){ ?>
-									<li class="club_<? echo $row_result2["c_number"]; ?>">
-										<a data-pjax href="index.php?c=<? echo $row_result2["c_number"]; ?>"><? echo $row_result2["c_name"]; ?></a>
-									</li>
-									<? } ?>
-								</ul>
-							</div>
-						<? } ?>
-					</div>
-				</nav>
-				<button class="close-button" id="close-button">Close Menu</button>
-			</div>
-			<button class="menu-button" id="open-button">Open Menu</button>
-		-->
 			<div id="container" class="container">
-        <?require_once("function/front_function.php"); ?>
                 <div class="club-wrap">
                     <img class="top_bar" src="image/bar00.png">
                     <? if( showct(1)) {?>
@@ -237,7 +215,31 @@ require_once('connection/connntpu.php');
                   </li>
                 <? } ?>
               <? } ?>
-						<? }if( empty($params) || (count($params) == 0)) { ?> 
+            <? } if (isset($params['start']) && ($params['start'] != '') && isset($params['end']) && ($params['end'] != '')) { ?>
+              <? for($i =0; $i < $count_time_at; $i++){ ?>
+                <? while( $row_result_func12[$i] = mysql_fetch_assoc($result_func12[$i]) ) {
+                  $p_number[$i] = $row_result_func12[$i]['p_number'];
+                  $at_number[$i] = $row_result_func12[$i]['album_type_number'];
+                  $c_number[$i] = $row_result_func12[$i]['club_number'];
+                  $p_code[$i] = $row_result_func12[$i]['p_code'];
+                  $filename[$i] = $row_result_func12[$i]['filename'];
+                  ?>
+                  <li class="photo" id="photo_<?echo $p_number[$i]?>">
+                    <a photo-pjax href="index.php?p=<?echo $p_number[$i]?>" style="border-color: <? selectcolor($at_number[$i]) ?>">
+                      <div class="image" style="background-image: url('image/<?echo $p_code[$i] ?>/<? echo $c_number[$i]?>/<?echo $at_number[$i]?>/<? echo $filename[$i] ?>');" alt="test">
+                        <img src="image/<?echo $p_code[$i] ?>/<? echo $c_number[$i]?>/<?echo $at_number[$i]?>/<? echo $filename[$i] ?>" style="width: 100%;">
+                        <? $sql_func2[$i] = "SELECT `at_club`, `at_name` FROM `album_type` WHERE `at_number` ='".$row_result_func12[$i]['album_type_number']."'";
+                        $result_func2[$i] = mysql_query($sql_func2[$i]);
+                        $row_result_func2[$i] = mysql_fetch_assoc($result_func2[$i]);
+                        ?>
+                        <h3 style="background: <? selectcolor($at_number[$i]) ?>"><?echo $row_result_func2[$i]['at_name']?></h3>
+                        <span style="background: <? selectcolor($at_number[$i]) ?>"><? echo $row_result_func2[$i]['at_club']?></span>
+                      </div>
+                    </a>
+                  </li>
+                <? } ?>
+              <? }?>
+						<? }if( empty($params) || (count($params) == 0) || isset($params['p'])) { ?> 
               <? $result_func1 = loadimage(0, 30);
 				        while( $row_result_func1 = mysql_fetch_assoc($result_func1) ) {
 								$p_number = $row_result_func1['p_number'];
@@ -275,7 +277,7 @@ require_once('connection/connntpu.php');
               $p_name = $row_result_func3['p_name'];
               $filename = $row_result_func3['filename'];
             ?>
-            <a class="<? if( $_GET['p'] == $p_number){ echo 'active-photo'; }?>" href="image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/<? echo $filename ?>" data="<? echo $p_number?>"><img  src="image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/thumb/<? echo $filename ?>" alt="<?echo $p_club ?> > <?echo $row_result_func6['at_name']?>" /></a>
+            <a class="<? if( $_GET['p'] == $p_number){ echo 'active-photo'; }?>" href="image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/<? echo $filename ?>" data="<? echo $p_number?>"><img  src="image/<?echo $p_code ?>/<? echo $c_number?>/<?echo $at_number?>/thumb/<? echo $filename ?>" alt="<?echo $p_club ?> &raquo; <?echo $row_result_func6['at_name']?>" /></a>
             <? } ?>
 
           </div>
@@ -339,8 +341,8 @@ require_once('connection/connntpu.php');
             <div class="skin-setttings">
               <div class="title">搜尋</div>
               <div class="setings-item">
-                <form id="search" method="get">
-                  <select class="search club_search" name="c" data-placeholder="請選擇社團名稱" multiple>
+                <form id="search" method="get" onsubmit="return checksearchform();">
+                  <select class="search club_search form-control" name="c" data-placeholder="請選擇社團名稱" multiple>
                     <?
                       function getct_name($element){ return $element['ct_name']; }
                       $ct_name = array_map('getct_name', $available_club);
@@ -359,7 +361,8 @@ require_once('connection/connntpu.php');
                       } 
                     ?>
                   </select>
-                  <select class="search activity_search" name="at" data-placeholder="請選擇活動名稱" multiple>
+                  <p></p>
+                  <select class="search activity_search form-control" name="at" data-placeholder="請選擇活動名稱" multiple>
                     <?
                       function getc_name($element){ return $element['c_name']; }
                       $c_name = array_map('getc_name', $available_album_type);
@@ -378,6 +381,10 @@ require_once('connection/connntpu.php');
                       } 
                     ?>
                   </select>
+                  <p></p>
+                  <input type='text' class="form-control" name='start' placeholder="最後修改起始日期" id='date1'/>
+                  <p></p>
+                  <input type='text' class="form-control" name='end' placeholder="最後修改結束日期" id='date2'/>
                   <button class="search_btn" type="submit">篩選</button>
                 </form>
               </div>          
@@ -390,10 +397,49 @@ require_once('connection/connntpu.php');
           $('.spin-icon').click(function () {
             $(".theme-config-box").toggleClass("show");
           });
-          $('.club_search').on('change',function(){
-            alert($('.club_search option:selected').text());
-          })
         })
+        function checksearchform (){
+          var errorMsg = "";
+          if($('#date1').val() != '' && $('#date2').val() == '' ){
+            errorMsg += "\n請輸入結束日期";
+          }
+          if($('#date1').val() == '' && $('#date2').val() != '' ){
+            errorMsg += "\n請輸入起始日期";
+          }
+          if (errorMsg == "") {
+            $('#search').find('input').each(function() {
+                var input = $(this);
+                if (!input.val()) {
+                  input.prop('disabled', true);
+                }
+            });
+            return true;
+          }
+          else {
+            alert(errorMsg);
+            return false;
+          }
+        }
+      </script>
+      <script type="text/javascript">
+            $(function () {
+                $('#date1').datetimepicker({
+                  locale: 'zh-tw',
+                  format: 'YYYY-MM-DD'
+                });
+                $('#date2').datetimepicker({
+                  locale: 'zh-tw',
+                  format: 'YYYY-MM-DD',
+                  useCurrent: false
+                });
+                $("#date1").on("dp.change", function (e) {
+                  $('#date2').data("DateTimePicker").minDate(e.date);
+                });
+                $("#date2").on("dp.change", function (e) {
+                  $('#date1').data("DateTimePicker").maxDate(e.date);
+                });
+                
+            });
       </script>
 		<!--
 

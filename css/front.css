@@ -131,10 +131,10 @@ body.night .jgallery .zoom-container .nav-bottom, body.night .jgallery-thumbnail
 .jgallery .zoom-container .nav-bottom > .title{
   color: #E86178 !important;
   font-weight: bold;
-  font-size: 1.5em !important;
+  font-size: 25px !important;
   padding: 0;
   margin-left: 40px;
-  white-space: normal;
+/*  white-space: normal;*/
 }
 body.night .jgallery .jgallery-btn:hover {
   color: rgb(240,242,243) !important;
@@ -613,7 +613,7 @@ ul.club li a, span.control a {
     display: none !important;
   }
   .jgallery .zoom-container .nav-bottom > .title{
-    font-size: 1.2em !important; 
+    font-size: 20px !important; 
   }
 }
 
