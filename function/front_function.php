@@ -145,6 +145,23 @@ if (isset($params['at']) && ($params['at'] != '')){
     
   }
 }
+//[搜尋]
+if (isset($params['start']) && ($params['start'] != '') && isset($params['end']) && ($params['end'] != '')){
+  // function 11 查看album的最後修改時間
+  $sql_func11 = "SELECT `at_number` FROM `album_type`, `club` WHERE `album_type`.`club_number` = `club`.`c_number` and `c_show` = 1 and `album_type`.`time` BETWEEN '".$params['start'][0]."' AND '".$params['end'][0]." 23:59:59'";
+  $result_func11 = mysql_query($sql_func11);
+  $i = 0;
+  while($row_result_func11 = mysql_fetch_assoc($result_func11)){
+    $time_at[$i] = $row_result_func11;
+    $i++;
+  }
+  $count_time_at = count($time_at);
+  for($i =0; $i < $count_time_at; $i++){
+    // function 12 查看album number 對應的一個隨機photo
+    $sql_func12[$i] = "SELECT * FROM `photo` WHERE `album_type_number` = '". $time_at[$i]['at_number'] . "' ORDER BY RAND() LIMIT 0,1";
+    $result_func12[$i] = mysql_query($sql_func12[$i]);
+  }
+}
 ?>
 
 
