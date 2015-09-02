@@ -98,19 +98,7 @@ if (isset($_GET['p']) && ($_GET['p'] != '')){
   $row_result_func6 = mysql_fetch_assoc($result_func6);
   
 }
-// [搜尋]
-if (isset($params['c']) && ($params['c'] != '')){
-  $count_c = count($params['c']);
-  for($i =0; $i < $count_c; $i++){
-    // function 4 查看club number對應的社團名子
-    $sql_func4[$i] = "SELECT * FROM `club` WHERE `c_number` = '". $params['c'][$i] . "'";
-    $result_func4[$i] = mysql_query($sql_func4[$i]);
-    $row_result_func4[$i] = mysql_fetch_assoc($result_func4[$i]);
-    //function 5 查看 社團下 有多少相簿 然後各取一筆資料
-    $sql_func5[$i] = "SELECT * FROM ( SELECT * FROM `photo` WHERE `album_type_number` IN ( SELECT DISTINCT `album_type_number` FROM `photo` WHERE `club_number` = '".$params['c'][$i] . "') ORDER BY RAND( ) ) AS T GROUP BY `album_type_number` ORDER BY `time` DESC";
-    $result_func5[$i] = mysql_query($sql_func5[$i]);
-  }
-}
+
 if (isset($params['ct'][0]) && ($params['ct'][0] != '')){
   //function 7 查看社團類別下的社團 
   $sql_func7 = "SELECT * FROM(SELECT * FROM `photo` WHERE `album_type_number` in (SELECT `at_number` FROM `album_type` WHERE `club_number` in ( SELECT `c_number` FROM `club` WHERE `c_type`= ". $params['ct'][0] ." and `c_show` = 1)) ORDER BY RAND())as T GROUP BY `album_type_number` ORDER BY `time` DESC";
@@ -135,18 +123,65 @@ while($row_result_func9 = mysql_fetch_assoc($result_func9)){
   $available_album_type[$i] = $row_result_func9 ;
   $i++;
 };
-//[搜尋]
-if (isset($params['at']) && ($params['at'] != '')){
-  $count_at = count($params['at']);
-  for($i =0; $i < $count_at; $i++){
-    // function 10 查看album number 對應的一個隨機photo
-    $sql_func10[$i] = "SELECT * FROM `photo` WHERE `album_type_number` = '". $params['at'][$i] . "' ORDER BY RAND() LIMIT 0,1";
-    $result_func10[$i] = mysql_query($sql_func10[$i]);
+
+/////// 搜尋 篩選
+
+// 過濾 c,at,start,end  以及 at,start,end
+if(isset($params['at']) && ($params['at'] != '') && isset($params['start']) && ($params['start'] != '') && isset($params['end']) && ($params['end'] != '')){
+  $count = count($params['at']);
+  $at_str = implode(", ",$params['at']);
+  //function 4 篩選 吻合 at,start,end 的相簿
+  $sql_func4 = "SELECT `at_number` FROM `album_type`, `club` WHERE `album_type`.`club_number` = `club`.`c_number` and `c_show` = 1 and `at_number` in (". $at_str .") and`album_type`.`time` BETWEEN '".$params['start'][0]."' AND '".$params['end'][0]." 23:59:59'";
+  $result_func4 = mysql_query($sql_func4);
+  $i = 0;
+  while($row_result_func4 = mysql_fetch_assoc($result_func4)){
+    $time_at[$i] = $row_result_func4;
+    $i++;
+  }
+  $count = count($time_at);
+  for($i =0; $i < $count; $i++){
+    // function 5 查看album number 對應的一個隨機photo
+    $sql_func5[$i] = "SELECT * FROM `photo` WHERE `album_type_number` = '". $time_at[$i]['at_number'] . "' ORDER BY RAND() LIMIT 0,1";
+    $result_func5[$i] = mysql_query($sql_func5[$i]);
+  }
+
+// 過濾 c,start,end
+}else if(isset($params['c']) && ($params['c'] != '') && isset($params['start']) && ($params['start'] != '') && isset($params['end']) && ($params['end'] != '')){
+  $count = count($params['c']);
+  $c_str = implode(", ",$params['c']);
+  // function 10 篩選 吻合 c,start,end 的相簿
+  $sql_func10 = "SELECT `at_number` FROM `album_type`, `club` WHERE `album_type`.`club_number` = `club`.`c_number` and `c_show` = 1 and `club_number` in (". $c_str .") and`album_type`.`time` BETWEEN '".$params['start'][0]."' AND '".$params['end'][0]." 23:59:59'";
+  $result_func10 = mysql_query($sql_func10);
+  $i = 0;
+  while($row_result_func10 = mysql_fetch_assoc($result_func10)){
+    $time_c[$i] = $row_result_func10;
+    $i++;
+  }
+  $count = count($time_c);
+  for($i =0; $i < $count; $i++){
+    // function 5 查看album number 對應的一個隨機photo
+    $sql_func5[$i] = "SELECT * FROM `photo` WHERE `album_type_number` = '". $time_c[$i]['at_number'] . "' ORDER BY RAND() LIMIT 0,1";
+    $result_func5[$i] = mysql_query($sql_func5[$i]);
+  }
+// 過濾 c,at  以及 at
+}else if (isset($params['at']) && ($params['at'] != '')){
+  $count = count($params['at']);
+  for($i =0; $i < $count; $i++){
+    // function 5 查看album number 對應的一個隨機photo
+    $sql_func5[$i] = "SELECT * FROM `photo` WHERE `album_type_number` = '". $params['at'][$i] . "' ORDER BY RAND() LIMIT 0,1";
+    $result_func5[$i] = mysql_query($sql_func5[$i]);
     
   }
-}
-//[搜尋]
-if (isset($params['start']) && ($params['start'] != '') && isset($params['end']) && ($params['end'] != '')){
+// 過濾 c
+}else if (isset($params['c']) && ($params['c'] != '')){
+  $count = count($params['c']);
+  for($i =0; $i < $count; $i++){
+    //function 5 查看 社團下 有多少相簿 然後各取一筆資料
+    $sql_func5[$i] = "SELECT * FROM ( SELECT * FROM `photo` WHERE `album_type_number` IN ( SELECT DISTINCT `album_type_number` FROM `photo` WHERE `club_number` = '".$params['c'][$i] . "') ORDER BY RAND( ) ) AS T GROUP BY `album_type_number` ORDER BY `time` DESC";
+    $result_func5[$i] = mysql_query($sql_func5[$i]);
+  }
+// 過濾 start,end
+}else if(isset($params['start']) && ($params['start'] != '') && isset($params['end']) && ($params['end'] != '')){
   // function 11 查看album的最後修改時間
   $sql_func11 = "SELECT `at_number` FROM `album_type`, `club` WHERE `album_type`.`club_number` = `club`.`c_number` and `c_show` = 1 and `album_type`.`time` BETWEEN '".$params['start'][0]."' AND '".$params['end'][0]." 23:59:59'";
   $result_func11 = mysql_query($sql_func11);
@@ -155,13 +190,15 @@ if (isset($params['start']) && ($params['start'] != '') && isset($params['end'])
     $time_at[$i] = $row_result_func11;
     $i++;
   }
-  $count_time_at = count($time_at);
-  for($i =0; $i < $count_time_at; $i++){
-    // function 12 查看album number 對應的一個隨機photo
-    $sql_func12[$i] = "SELECT * FROM `photo` WHERE `album_type_number` = '". $time_at[$i]['at_number'] . "' ORDER BY RAND() LIMIT 0,1";
-    $result_func12[$i] = mysql_query($sql_func12[$i]);
+  $count = count($time_at);
+  for($i =0; $i < $count; $i++){
+    // function 5 查看album number 對應的一個隨機photo
+    $sql_func5[$i] = "SELECT * FROM `photo` WHERE `album_type_number` = '". $time_at[$i]['at_number'] . "' ORDER BY RAND() LIMIT 0,1";
+    $result_func5[$i] = mysql_query($sql_func5[$i]);
   }
 }
+
+
 ?>
 
 

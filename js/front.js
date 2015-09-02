@@ -50,6 +50,20 @@ function photoHeight(){
   $('.active-photo').css('height', $('.photo-all').height());
   $('li.photo-wrap.active-photo img').removeAttr('style').css({'max-height': '100%', 'display': 'inherit'});
 }
+function resetform(){
+  console.log('reset');
+  $('.club_search option').each(function(){
+    $(this).removeAttr('disabled');
+  })
+  $('.club_search :selected').removeAttr('selected');
+  $(".club_search").trigger("chosen:updated"); 
+  $('.activity_search optgroup').each(function(){
+    $(this).removeAttr('disabled');
+  })
+  $('.activity_search :selected').removeAttr('selected');
+  $(".activity_search").trigger("chosen:updated");
+  $('#date1, #date2').val('');
+}
 $(window).on('load resize pjax:end',function(){
   photoHeight();
 })
