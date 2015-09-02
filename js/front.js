@@ -102,10 +102,6 @@ jQuery(document).ready(function($) {
        new GridScrollFx( document.getElementById( 'grid' ), {
          viewportFactor : 0.4
        } );
-       imageloop();
-      }
-      else{
-       //GALLERY();  /***************************/
       }
     });
   }
