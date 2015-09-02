@@ -13,12 +13,12 @@ if (!isset($_SESSION["loginMember"]) || ($_SESSION["loginMember"]==""))
       $passwd = $row_result["passwd"];
       if(($_POST["username"]==$username) && (md5($_POST["passwd"]) == $passwd)) {
         $_SESSION["loginMember"]=$username;
-        header("Location: control.php?status=control");
+        header("Location: control.php?status=control"); 
         break;
       }else{
   //      header("Location: index.php");
         echo "<script type='text/javascript'>alert('錯誤帳號或密碼');</script>";
-        break;
+        //break;
       }
     }
 	}
@@ -71,9 +71,9 @@ if (!isset($_SESSION["loginMember"]) || ($_SESSION["loginMember"]==""))
 	</head>
 	<body style="background-color: #282C34; background-size: cover;">
 		<div id="main">
-			<div id="container">
-				<div id="form" style="width:70%;max-width: 700px; margin: 0 auto; text-align: center;">
-					<img style="width:100%;max-width: 700px; margin: 0 auto; margin-top: 50px;" src="../image/back logo.png">
+			<div id="container" style="position: fixed;top: 0;bottom: 0;left: 0; right: 0;">
+				<div id="form" style="height: 100%; margin: 0 auto; text-align: center;">
+					<img style="max-width: 100%; margin: 0 auto; margin-top: 50px; max-height: 60%" src="../image/back_logo.png">
 					<form id="form_login" name="form_login" method="post" action="" style="margin: 20px 40px 10px 40px;">
             <div style="margin: 0 auto; max-width: 200px;">
               <input type="text" name="username" id="username" class="login_text" style="width: 100%; margin: 0 auto;"/>

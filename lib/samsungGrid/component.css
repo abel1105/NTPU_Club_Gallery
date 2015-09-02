@@ -132,7 +132,8 @@
 	text-transform: uppercase;
 	letter-spacing: 1px;
 	font-weight: 800;
-	font-size: 1.3em;
+	font-size: 21px;
+  line-height: normal;
 	-webkit-transition: -webkit-transform 0.2s, color 0.2s;
 	transition: transform 0.2s, color 0.2s;
 }
@@ -150,7 +151,7 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: 800;
-  font-size: 1em;
+  font-size: 17px;
   -webkit-transition: -webkit-transform 0.2s, color 0.2s;
   transition: transform 0.2s, color 0.2s;
 }

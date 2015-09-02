@@ -25,7 +25,7 @@ include("../function/admin_function.php");
     <div id="topNav">
       <div class="logo">
         <a data-pjax href="control.php?status=control">
-          <img src="../image/back logo.png">
+          <img src="../image/back_logo.png">
         </a>
       </div>
       <div class="loginbar">
@@ -54,7 +54,6 @@ include("../function/admin_function.php");
         <div class="club_type">
           <div class="club_type_title">
             <span class="club_type_span"><? echo $row_result1["ct_name"]; ?></span>
-            <span id="spot_ct_<? echo $row_result1['ct_number']?>" class="spot <? if($row_result1["ct_show"]==0){echo noactive;}else{echo active;}?>"  onclick="pushSpotStatus('<? echo $row_result1['ct_number']?>','',this.id)"></span>
           </div>
           <ul class="club" style="display: none;">
             <?
@@ -63,7 +62,7 @@ include("../function/admin_function.php");
             while($row_result2 = mysql_fetch_assoc($result2)){ ?>
             <li class="club_<? echo $row_result2["c_number"]; ?>">
               <a data-pjax href="album_type.php?club_number=<? echo $row_result2["c_number"]; ?>"><? echo $row_result2["c_name"]; ?></a>
-              <span id="spot_c_<? echo $row_result2['c_number']?>" class="spot <? if($row_result2["c_show"]==0){echo noactive; }else{echo active;}?>" onclick="pushSpotStatus('', '<? echo $row_result2['c_number']?>',this.id)"></span> 
+              <span id="spot_c_<? echo $row_result2['c_number']?>" class="spot <? if($row_result2["c_show"]==0){echo noactive; }else{echo active;}?>" onclick="pushSpotStatus('<? echo $row_result2['c_number']?>',this.id)"></span> 
             </li>
             <? } ?>
           </ul>
@@ -84,12 +83,12 @@ include("../function/admin_function.php");
                   <? echo "新增社團失敗"; ?>
                 </div>
               <? } elseif($_GET['admin'] == '2') { ?>
-                <div class="widget" style="background-color: rgba(244,67,54,0.5);">
-                  <? echo "刪除社團失敗"; ?>
+                <div class="widget" style="background-color: rgba(38,166,154,0.5);">
+                  <? echo "刪除社團成功"; ?>
                 </div>
               <? } elseif($_GET['admin'] == '3') { ?>
                 <div class="widget" style="background-color: rgba(244,67,54,0.5);">
-                  <? echo "刪除社團成功"; ?>
+                  <? echo "刪除社團失敗"; ?>
                 </div>
               <? } ?>
             <? } ?>

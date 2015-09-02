@@ -2,6 +2,11 @@
 
 This project is for private use.
 
-## version
+## Version
 
-Lastest Version 1.1
+Lastest Version 1.2
+
+## Change
+
+1.2 : Add Sumome plugin and support search
+1.1 : Pjax-include page

@@ -2,6 +2,9 @@
 * {
   font-family: 'Noto Sans CJK TC', Helvetica, Microsoft JhengHei;
 }
+body{
+  overflow-x: hidden; 
+}
 ul {
   padding: 0;
   margin: 0;
@@ -128,10 +131,10 @@ body.night .jgallery .zoom-container .nav-bottom, body.night .jgallery-thumbnail
 .jgallery .zoom-container .nav-bottom > .title{
   color: #E86178 !important;
   font-weight: bold;
-  font-size: 1.5em !important;
+  font-size: 25px !important;
   padding: 0;
   margin-left: 40px;
-  white-space: normal;
+/*  white-space: normal;*/
 }
 body.night .jgallery .jgallery-btn:hover {
   color: rgb(240,242,243) !important;
@@ -610,6 +613,88 @@ ul.club li a, span.control a {
     display: none !important;
   }
   .jgallery .zoom-container .nav-bottom > .title{
-    font-size: 1.2em !important; 
+    font-size: 20px !important; 
   }
+}
+
+/** Sumome Customize **/
+body.night .sumome-share-client-animated.sumome-share-client-share.sumome-share-client-share-share.sumome-share-client-count {
+  color: #fff !important;
+}
+body.night .sumome-share-client-wrapper.sumome-share-client-wrapper-left-page{
+  opacity: 0.8;
+}
+
+body.night .sumome-share-client-wrapper.sumome-share-client-wrapper-left-page:hover {
+  opacity: 1;
+}
+body.image .sumome-share-client-wrapper {
+  display: none;
+}
+body.front .sumome-image-sharer {
+  display: none;
+}
+/** search bar  **/
+.theme-config {
+  position: absolute;
+  top: 90px;
+  right: 0px;
+}
+.theme-config-box {
+  margin-right: -220px;
+  position: relative;
+  z-index: 50;
+  transition-duration: 0.8s;
+}
+.theme-config-box.show {
+  margin-right: 0px;
+}
+.spin-icon {
+  background: #E86178;
+  position: absolute;
+  padding: 11px 10px 11px 13px;
+  border-radius: 20px 0px 0px 20px;
+  font-size: 16px;
+  top: 0;
+  left: 0px;
+  width: 40px;
+  color: #fff;
+  cursor: pointer;
+}
+body.night .spin-icon {
+  opacity: 0.8;
+}
+body.night .spin-icon:hover, body.night .theme-config-box.show .spin-icon {
+  opacity: 1; 
+}
+.skin-setttings {
+  width: 220px;
+  margin-left: 40px;
+  background: #fff;
+}
+.skin-setttings .title {
+  background: #efefef;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 600;
+  display: block;
+  padding: 10px 15px;
+  font-size: 15px;
+}
+.setings-item {
+  padding: 10px 30px;
+}
+select.search {
+  width: 100%;
+  margin: 30px auto;
+}
+.search_btn {
+  margin: 10px auto;
+  background: #E86178;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  padding: 5px 10px;
+  width: 50px;
+  display: block;
 }
