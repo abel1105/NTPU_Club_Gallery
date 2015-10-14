@@ -183,7 +183,7 @@ if(isset($params['at']) && ($params['at'] != '') && isset($params['start']) && (
 // 過濾 start,end
 }else if(isset($params['start']) && ($params['start'] != '') && isset($params['end']) && ($params['end'] != '')){
   // function 11 查看album的最後修改時間
-  $sql_func11 = "SELECT `at_number` FROM `album_type`, `club` WHERE `album_type`.`club_number` = `club`.`c_number` and `c_show` = 1 and `album_type`.`time` BETWEEN '".$params['start'][0]."' AND '".$params['end'][0]." 23:59:59'";
+  $sql_func11 = "SELECT `at_number` FROM `album_type`, `club` WHERE `album_type`.`club_number` = `club`.`c_number` and `c_show` = 1 and `album_type`.`time` BETWEEN '".$params['start'][0]."' AND '".$params['end'][0]." 23:59:59' LIMIT 0,30";
   $result_func11 = mysql_query($sql_func11);
   $i = 0;
   while($row_result_func11 = mysql_fetch_assoc($result_func11)){
