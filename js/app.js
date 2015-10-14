@@ -68,6 +68,8 @@ if(localStorage.getItem('status') != undefined){
   addcolor(JSON.parse(getStatus).color);
   toggleMenu(JSON.parse(getStatus).togglemenu);
   $('body').show();
+}else{
+	$('body').show();
 }
 function toggleMenu(e) {
   function show(){
@@ -176,7 +178,7 @@ jQuery(document).ready(function($) {
     $('span.control').closest('.club_type').addClass('active');
   })
   // initial toobox
-  $('.toolbox').popover({ html : true, content: '<div style="text-align: center;"> 背景</br><select id= "changeColor" onchange="addcolor(value)"><option value="color">正常</option><option value="blue">藍色</option><option value="grey">灰色</option><option value="green">綠色</option><option value="daynight">黑藍</option></select></br>功能表</br><button class="blueBtn" onclick="toggleMenu()">toggle</button></div>'});
+  $('.toolbox').popover({ html : true, content: '<div style="text-align: center;"> 背景</br><select id= "changeColor" onchange="addcolor(value)"><option value="color">正常</option><option value="blue">藍色</option><option value="grey">灰色</option><option value="green">綠色</option><option value="daynight">黑藍</option></select><div class="hidden-xs">功能表</br><button class="blueBtn" onclick="toggleMenu()">toggle</button></div></div>'});
 
   // add bootstrap icon in club_type
   $('.club_type:eq(0) div.club_type_title').prepend("<span class='glyphicon glyphicon-cog' aria-hidden='true'></span>")
