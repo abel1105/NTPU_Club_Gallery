@@ -1,9 +1,5 @@
-<?php
-require_once('connection/connntpu.php');
-
-?>
-
-        <?require_once("function/front_function.php"); ?>
+<?php require_once('connection/connntpu.php'); ?>
+<?php require_once("function/front_function.php"); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<head>
     <title>臺北大學社團活動相簿</title>
@@ -20,10 +16,7 @@ require_once('connection/connntpu.php');
 		<link rel="stylesheet" type="text/css" href="lib/samsungGrid/normalize.css" />
 		<link rel="stylesheet" type="text/css" href="lib/samsungGrid/component.css" />
 		<link rel="stylesheet" type="text/css" href="lib/font-awesome-4.2.0/css/font-awesome.min.css" />
-		<link rel="stylesheet" type="text/css" href="lib/off-canvasmenueffect/menu_sideslide.css" />
-    <!-- gallery -->
-		<link rel="stylesheet" type="text/css" href="lib/gallery/style.css" />
-		<link rel="stylesheet" type="text/css" href="lib/gallery/elastislide.css" />
+    <!-- jgallery -->
     <link rel="stylesheet" type="text/css" href="lib/jgallery/jgallery.min.css" />
 		<link href="lib/nprogress/nprogress.css" rel="stylesheet">
     <!-- chosen -->
@@ -54,8 +47,6 @@ require_once('connection/connntpu.php');
 		<!--[if IE]>
 			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
-
-        
 		<!-- pjax -->
 		<script src="lib/pjax/jquery.pjax.js"></script>
     <!-- gallery -->
@@ -63,7 +54,6 @@ require_once('connection/connntpu.php');
     <script type="text/javascript" src="lib/jgallery/touchswipe.min.js"></script>
 		<script src="js/front.js"></script>
     <script src="//load.sumome.com/" data-sumo-site-id="b5dce7256cabf394a582aa17c7c13cd6c876b3b99da8e932e5562ae33a53caa7" async="async"></script>
-<!--    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-55d7dd4a6316bc47" async="async"></script>-->
 <?php 
   if(isset($_GET['p']) && ($_GET['p'] != '')){
     $bodyClass = "image";
@@ -73,11 +63,6 @@ require_once('connection/connntpu.php');
 ?>
 	</head>
 	<body class="night <?echo $bodyClass ?>"> 
-<!--
-		<div id="large-header" class="large-header">
-			<canvas id="demo-canvas"></canvas>
-		</div>
--->
 		<div class="main">
 			<div class="logo-wrap">
 				<a data-pjax href="index.php">
@@ -139,12 +124,6 @@ require_once('connection/connntpu.php');
                               <circle r="0"></circle>
                             </svg>
 						</div>
-<!--
-            <div class="load-anim">
-              <div class="load-anim-icon">
-              </div>
-            </div>
--->
 						<? if($_GET['ct'] != ''){  ?>
 							<? while( $row_result_func7 = mysql_fetch_assoc($result_func7) ) {
 								$p_number = $row_result_func7['p_number'];
@@ -466,26 +445,9 @@ require_once('connection/connntpu.php');
                 
             });
       </script>
-		<!--
-
-		<script src="lib/gallery/jquery.tmpl.min.js"></script>
-		<script src="lib/gallery/jquery.easing.1.3.js"></script>
-		<script src="lib/gallery/jquery.elastislide.js"></script>
-		<script src="lib/gallery/gallery.js"></script>-->
-		<!-- scroll -->
-		<!--<script src="lib/fancy-scroll/jquery.fancy-scroll.min.js"></script>-->
-		<!-- photo -->
 		<script src="lib/masonry/masonry.pkgd.min.js"></script>
 		<script src="lib/imagesloaded/imagesloaded.pkgd.min.js"></script>
 		<script src="lib/samsungGrid/classie.js"></script>
-<!--		<script src="lib/colorfinder/colorfinder-1.1.js"></script>-->
 		<script src="lib/samsungGrid/gridScrollFx.js"></script>
-		<!-- menu -->
-		<!--<script src="lib/off-canvasmenueffect/main.js"></script>-->
-		<!-- Animated background -->
-		<!--<script src="lib/animatedbackground/TweenLite.min.js"></script>
-		<script src="lib/animatedbackground/EasePack.min.js"></script>
-		<script src="lib/animatedbackground/rAF.js"></script>
-		<script src="lib/animatedbackground/demo-1.js"></script>-->
 	</body>
 </html>
