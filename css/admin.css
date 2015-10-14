@@ -156,6 +156,11 @@ button.blueBtn {
 button.blueBtn:hover {
   background-color: #003973;
 }
+span.warn {
+  background-color: #F44336;
+  padding: 4px 8px;
+  border-radius: 5px;
+}
 /*   Control  */
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 @keyframes bake-pie {
@@ -518,10 +523,30 @@ div.showImg{
     
 }
 @media (max-width: 767px) {
+  .hidden-xs {
+    display: none !important;
+  }
   #sideNav{
     display: none;
   }
   #wrap {
     margin-left: 20px;
+    margin-top: 240px;
+  }
+  .logo {
+    width: 100%;
+    margin: 0 auto;
+    height: 132px;
+    margin-top: 5px;
+  }
+  .logo img {
+    height: 100%;
+    width: initial;
+  }
+  .loginbar {
+    width: initial;
+    left: 25px;
+    right: 25px;
+    margin: 150px 0 0 0;
   }
 }
