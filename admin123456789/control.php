@@ -18,7 +18,6 @@ include("../function/admin_function.php");
     <script src="../lib/nprogress/nprogress.js"></script>
     <script src="../lib/jquery.confirm/jquery.confirm.min.js"></script>
     <script src="../js/check_form_function.js"></script>
-    <script src="../lib/jquery_cookie/jquery.cookie.js"></script>
     <? include_once('../function/amchart/amchart.php') ?> 
   </head>
   <body class="color" style="display:none;">
@@ -40,7 +39,7 @@ include("../function/admin_function.php");
         </a>
       </div>
     </div>
-    <div id="sideNav">
+    <div id="sideNav" class="hidden-xs">
       <div class="club_type">
         <div class="club_type_title">
           <span class="control">
@@ -92,7 +91,7 @@ include("../function/admin_function.php");
                 </div>
               <? } ?>
             <? } ?>
-            <div class="widget">
+            <div class="widget hidden-xs">
               <form method="post" name="create_club" onsubmit="return check_form_add_club();">
                 <b class="title">新增社團</b>
                 &nbsp;&nbsp;
